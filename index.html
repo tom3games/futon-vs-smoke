@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<script id="ghMove">if(location.hostname==='tom3games.github.io'){location.replace('https://tom3games.com/play/futon-vs-smoke/'+location.search+location.hash)}</script>
+<link rel="canonical" href="https://tom3games.com/play/futon-vs-smoke/">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>禁煙三日目、煙の魔人 | 型を覚えて倒すボス戦アクション</title>
+<meta name="description" content="禁煙三日目の夜、灰皿から出てきた煙の魔人を布団にくるまったまま追い払う2Dアクション。道中と屋上のボス戦が1本につながり、布団を敷いた所から再開できる。ダウンロードなし、PCのキーボードとパッドで遊べる。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="禁煙三日目、煙の魔人">
+<meta property="og:description" content="布団にくるまって煙の魔人と1対1。拳・吸い殻・煙の輪の型を覚えて、白い輪は布団ではじき返す。ダウンロードなしのボス戦アクション。">
+<meta property="og:image" content="https://tom3games.com/play/futon-vs-smoke/og.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://tom3games.com/play/futon-vs-smoke/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16192b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=4">
+<link rel="modulepreload" href="js/game.js?v=4">
+<link rel="modulepreload" href="shared/sim.js?v=4">
+</head>
+<body>
+<main id="app">
+  <div id="screen"><canvas id="cv" width="960" height="540"></canvas>
+    <div id="toast" class="hidden"></div>
+    <button id="btnMute" class="corner" aria-label="音"><svg viewBox="0 0 40 40"><path d="M8 15h6l8-7v24l-8-7H8z" fill="#f3e9d2"/><path class="wave" d="M26 14q5 6 0 12M29 10q9 10 0 20" fill="none" stroke="#f3e9d2" stroke-width="3" stroke-linecap="round"/><path class="x" d="M26 15l9 10M35 15l-9 10" stroke="#f3e9d2" stroke-width="3" stroke-linecap="round"/></svg></button>
+    <button id="btnPause" class="corner" aria-label="一時停止"><svg viewBox="0 0 40 40"><path d="M13 10v20M27 10v20" stroke="#f3e9d2" stroke-width="5" stroke-linecap="round"/></svg></button>
+  </div>
+  <div id="pad" class="hidden">
+    <!-- 左下: 指を置いた所が中心になるスティック -->
+    <div id="stickZone"><div id="stick" class="idle"><i id="knob"></i></div><p id="stickHint"></p></div>
+    <!-- 右下: 親指の届く弧に大きい丸。跳ぶが角でいちばん大きい -->
+    <div class="acts">
+      <button data-k="jump" class="b-jump"><span></span></button>
+      <button data-k="shoot" class="b-shoot"><span></span></button>
+      <button data-k="dash" class="b-dash"><span></span></button>
+      <button data-k="parry" class="b-parry"><span></span></button>
+    </div>
+  </div>
+  <section id="title" class="sheet hidden">
+    <div class="tcard">
+      <h1><span id="t1"></span><b id="t2"></b></h1>
+      <p id="story"></p>
+      <div class="tbtns"><button id="btnStart" class="main"></button><button id="btnCont" class="sub hidden"></button></div>
+      <pre id="keys"></pre>
+      <p class="tfoot"><button id="btnLang" class="link"></button><span id="credit"></span></p>
+    </div>
+  </section>
+  <section id="diary" class="sheet hidden">
+    <div class="page">
+      <p class="dhead"><b id="dHead"></b><span id="dSub"></span></p>
+      <canvas id="dmap" width="760" height="200"></canvas>
+      <div id="dRows"></div>
+      <div id="stamp" class="hidden"></div>
+      <div class="dbtns"><button id="btnA" class="main"></button><button id="btnAgain" class="sub"></button><a id="btnPost" class="sub hidden" target="_blank" rel="noopener"></a></div>
+    </div>
+  </section>
+  <section id="pauseBox" class="sheet hidden"><div class="page small"><p id="pTxt"></p><button id="btnResume" class="main"></button></div></section>
+  <p id="rotHint" class="hidden"></p>
+</main>
+<div id="boot">
+  <svg viewBox="0 0 200 120" aria-hidden="true">
+    <g class="fold"><rect x="40" y="70" width="120" height="22" rx="9" fill="#e9dfc6" stroke="#1b1b22" stroke-width="3"/><rect class="f1" x="36" y="50" width="128" height="24" rx="10" fill="#2f3a6b" stroke="#1b1b22" stroke-width="3"/><rect class="f2" x="44" y="34" width="112" height="20" rx="9" fill="#38457c" stroke="#1b1b22" stroke-width="3"/><rect x="70" y="22" width="60" height="16" rx="8" fill="#f3ead6" stroke="#1b1b22" stroke-width="3"/></g>
+    <path class="smk" d="M150 40q8-10 0-18t4-18" fill="none" stroke="#9aa2b8" stroke-width="4" stroke-linecap="round"/>
+  </svg>
+  <p id="bootMsg">布団をたたんでいます</p>
+  <div class="boot-bar"><i id="bootBar"></i></div>
+</div>
+<script>
+(function(){var o={passive:false};
+['gesturestart','gesturechange','gestureend'].forEach(function(n){document.addEventListener(n,function(e){e.preventDefault()},o)});
+document.addEventListener('touchmove',function(e){if(e.touches&&e.touches.length>1)e.preventDefault()},o);
+var l=0;document.addEventListener('touchend',function(e){var n=Date.now();if(n-l<300&&!(e.target.closest&&e.target.closest('button,a')))e.preventDefault();l=n},o);
+document.addEventListener('dblclick',function(e){e.preventDefault()},o);
+window.addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault()},o);
+window.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&['+','-','=','0',';'].indexOf(e.key)>=0)e.preventDefault()});
+try{if((localStorage.getItem('fvs_lang')||((navigator.language||'ja').indexOf('ja')==0?'ja':'en'))=='en')document.getElementById('bootMsg').textContent='Folding the futon'}catch(e){}
+window.__jsUp=false;
+setTimeout(function(){window.__bootTimeout=!window.__bootDone;document.getElementById('boot').classList.add('gone')},12000);
+var errs=[];window.addEventListener('error',function(e){errs.push((e.message||(e.target&&(e.target.src||e.target.href))||'error')+' @'+(e.filename||'')+':'+(e.lineno||''))},true);
+window.addEventListener('unhandledrejection',function(e){errs.push(String(e.reason&&e.reason.message||e.reason))});
+setTimeout(function(){if(window.__jsUp)return;var d=document.createElement('div');d.id='bootErr';d.textContent='起動できませんでした / failed to start\n'+errs.join('\n')+'\n'+navigator.userAgent;document.body.appendChild(d)},15000)})();
+</script>
+<script src="sfx.js?v=1"></script>
+<script type="module" src="js/game.js?v=4"></script>
+<script src="support.js?v=1" data-ja="缶コーヒー" data-en="a coffee"></script>
+</body>
+</html>

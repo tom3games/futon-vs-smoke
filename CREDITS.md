@@ -1,0 +1,41 @@
+- snd/cloth1.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/cloth2.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/cloth3.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/cloth4.mp3: 50 RPG sound effects / Kenney / CC0
+- snd/step1.mp3: 100 CC0 SFX #2 / rubberduck / CC0
+- snd/step2.mp3: 100 CC0 SFX #2 / rubberduck / CC0
+- snd/whap1.mp3: Thwack Sounds / AntumDeluge / CC0
+- snd/whap2.mp3: Thwack Sounds / AntumDeluge / CC0
+- snd/whap3.mp3: Thwack Sounds / AntumDeluge / CC0
+- snd/slam1.mp3: 75 CC0 breaking / falling / hit sfx / rubberduck / CC0
+- snd/slam2.mp3: 75 CC0 breaking / falling / hit sfx / rubberduck / CC0
+- snd/crack.mp3: 75 CC0 breaking / falling / hit sfx / rubberduck / CC0
+- snd/swish1.mp3: Swishes Sound Pack / artisticdude / CC0
+- snd/swish2.mp3: Swishes Sound Pack / artisticdude / CC0
+- snd/swish3.mp3: Swishes Sound Pack / artisticdude / CC0
+- snd/pop1.mp3: 3 Pop Sounds / wubitog / CC0
+- snd/pop2.mp3: 3 Pop Sounds / wubitog / CC0
+- snd/pop3.mp3: 3 Pop Sounds / wubitog / CC0
+- snd/grunt1.mp3: Little Grunts / crueltyinc / CC0
+- snd/grunt2.mp3: Little Grunts / crueltyinc / CC0
+- snd/grunt3.mp3: Little Grunts / crueltyinc / CC0
+- snd/save.mp3: Bell dings/chimes / PWL / CC0
+- snd/win.mp3: 85 Short music jingles / Kenney / CC0
+- snd/lose.mp3: 85 Short music jingles / Kenney / CC0
+- snd/phase.mp3: 85 Short music jingles / Kenney / CC0
+- snd/click.mp3: Interface Sounds / Kenney / CC0
+- snd/bgm_boss.mp3: Catch me if you can! / poinl / CC0
+- snd/bgm_stage.mp3: Japanese Lofi HipHop Track / pickentcode / CC0
+- snd/crickets.mp3: Crickets Ambient Noise - loopable / Wolfgang_ / CC0
+- snd/spray.mp3: File:Deodorant spray.ogg / ezwa / Public domain（短く切った）
+- snd/cough.mp3: File:Man coughing.ogg / stilgar / Public domain
+- snd/whoosh.mp3: Air Whoosh / OpenGameArt / CC0（短く切った）
+- snd/wind_loop.mp3: File:Howling wind.ogg / Wikimedia Commons / CC0（ループに切った）
+- snd/street_loop.mp3: File:Sunday in the city street noise 1.ogg / Wikimedia Commons / Public domain
+
+## 絵
+- img/*.webp: このゲームのために描いた架空のキャラクター・小道具・背景（art/key.py が切り分け）
+- ボスは1枚絵を頭・胴・腕（上と下）・灰皿に分け、関節でつないで動かしている（js/game.js の RIG）
+
+## 字
+- Yusei Magic（Google Fonts / SIL Open Font License）
